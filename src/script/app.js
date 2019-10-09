@@ -9,7 +9,8 @@ App = {
             if (provider) {
                 App.web3 = new Web3(provider)
             } else {
-                App.web3 = new Web3(new Web3.providers.HttpProvider("https://mainnet.infura.io/v3/94890e5bd20040fe861e18da383bb492"))
+                //App.web3 = new Web3(new Web3.providers.HttpProvider("https://mainnet.infura.io/v3/94890e5bd20040fe861e18da383bb492"))
+                App.web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:9545/"))
             }
             return App.initContracts()
         } catch (error) {
@@ -42,27 +43,49 @@ App = {
     initContracts: async () => {
         App.networkId = await App.web3.eth.net.getId()
 
-        if (App.networkId !== 1) {
-            $("#submit").attr("disabled", true)
-            alert ("Please switch your Metamask node to Mainnet");
-            return
-        }
+        console.log("networkdId : ", App.networkId);
 
-        App.airdropAddress = "0x94080Ed2F72967554D2a6Bf1DD6f678e498DdB29"
-        App.airdropABI = [{"constant":false,"inputs":[{"name":"addresses","type":"address[]"},{"name":"values","type":"uint256[]"}],"name":"doAirdrop","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"token","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"}]
-        App.airdropInstance = new App.web3.eth.Contract(App.airdropABI, App.airdropAddress)
+        // if (App.networkId !== 1) {
+        //     $("#submit").attr("disabled", true)
+        //     alert ("Please switch your Metamask node to Mainnet");
+        //     return
+        // }
 
-        App.tokenAddress = await App.airdropInstance.methods.token().call()
-        App.tokenABI = [{"constant":false,"inputs":[{"name":"spender","type":"address"},{"name":"value","type":"uint256"}],"name":"approve","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"from","type":"address"},{"name":"to","type":"address"},{"name":"value","type":"uint256"}],"name":"transferFrom","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"who","type":"address"}],"name":"balanceOf","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"to","type":"address"},{"name":"value","type":"uint256"}],"name":"transfer","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"owner","type":"address"},{"name":"spender","type":"address"}],"name":"allowance","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"anonymous":false,"inputs":[{"indexed":true,"name":"from","type":"address"},{"indexed":true,"name":"to","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"owner","type":"address"},{"indexed":true,"name":"spender","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Approval","type":"event"}],
+
+
+          //            "Error: Error: [ethjs-rpc] rpc error with payload {"id":5755121301389,"jsonrpc":"2.0","params":["0xf9012a068477359400829feb94eee4a1f9b693b561d05e6e6e4164a0e2134330e880b8c4c0116c3c000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000001000000000000000000000000591665520bfa39176d383576b199e917ad859555000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000de822d45a0a9600bd684bc92412a056bd30848a74ab18714c90f29ea346d979a6ede4e236ea06997d07e3bccb008dea3f3827000155161aae2eac1c7e8330b7370f7940b45e2"],"method":"eth_sendRawTransaction"} [object Object]"
+
+         // console.log(" ===> " , App.web3.utils.hexToUtf8("0xf9012a068477359400829feb94eee4a1f9b693b561d05e6e6e4164a0e2134330e880b8c4c0116c3c000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000001000000000000000000000000591665520bfa39176d383576b199e917ad859555000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000de822d45a0a9600bd684bc92412a056bd30848a74ab18714c90f29ea346d979a6ede4e236ea06997d07e3bccb008dea3f3827000155161aae2eac1c7e8330b7370f7940b45e2"))
+
+
+        // App.airdropAddress = "0xEee4A1f9B693B561d05e6e6E4164a0e2134330e8";
+        // //App.airdropABI = [{"constant":false,"inputs":[{"name":"addresses","type":"address[]"},{"name":"values","type":"uint256[]"}],"name":"doAirdrop","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"token","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"}]
+        // App.airdropABI = airdropABI;
+        // App.airdropInstance = new App.web3.eth.Contract(App.airdropABI, App.airdropAddress)
+
+        //App.tokenAddress = await App.airdropInstance.methods.token().call()
+        App.tokenAddress = "0xe371bbeB2C8D5890e9b5E1998273FB3f3E135AA7";
+        console.log("App.tokenAddress : ", App.tokenAddress);
+        //App.tokenABI = [{"constant":false,"inputs":[{"name":"spender","type":"address"},{"name":"value","type":"uint256"}],"name":"approve","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"from","type":"address"},{"name":"to","type":"address"},{"name":"value","type":"uint256"}],"name":"transferFrom","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"who","type":"address"}],"name":"balanceOf","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"to","type":"address"},{"name":"value","type":"uint256"}],"name":"transfer","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"owner","type":"address"},{"name":"spender","type":"address"}],"name":"allowance","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"anonymous":false,"inputs":[{"indexed":true,"name":"from","type":"address"},{"indexed":true,"name":"to","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"owner","type":"address"},{"indexed":true,"name":"spender","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Approval","type":"event"}],
+        App.tokenABI = tokenABI;
         App.tokenInstance = new App.web3.eth.Contract(App.tokenABI, App.tokenAddress)
 
         return App.initVariables()
     },
 
     initVariables: async () => {
-        App.ownerAddress = "0xB5869587CA6E239345f75C28d3b8Ee23da812759"
+        App.ownerAddress = "0x297ee9949cE7eB344Cb932482c7DAce87F967262";
         App.account = await App.web3.eth.getAccounts().then(accounts => accounts[0])
-        App.allowance = App.web3.utils.fromWei(await App.tokenInstance.methods.allowance(App.ownerAddress, App.airdropAddress).call(), 'ether')
+        console.log("App.account : ", App.account);
+        //App.allowance = App.web3.utils.fromWei(await App.tokenInstance.methods.allowance(App.ownerAddress, App.airdropAddress).call(), 'ether')
+        //console.log("call() : ", App.tokenInstance.methods.allowance(App.ownerAddress, App.airdropAddress).call())
+        //App.tokenInstance.methods.allowance(App.ownerAddress, App.airdropAddress).call()
+        App.tokenInstance.methods.allowance(App.ownerAddress, App.tokenAddress).call()
+     //   App.tokenInstance.methods.allowance(App.ownerAddress, "0xfc909c43619b2377cfbd7ce475c2678488c9399a").call()
+        App.allowance = await App.web3.eth.getBalance(App.account);
+        console.log("balance : " ,App.web3.eth.getBalance(App.account))
+        console.log("App.allowance : ", App.allowance);
+        //App.allowance = App.web3.utils.fromWei("55555999999",'wei')
         if (localStorage.getItem("transactions") === null) {
             localStorage.setItem("transactions", JSON.stringify([]))
         }
@@ -71,7 +94,7 @@ App = {
 
     showAllowance: () => {
         const amount = App.allowance
-        $('#allowance').text(amount > 0 ? amount + " EVOT" : '0. (Please allow more tokens for ' + App.airdropAddress + ' contract.)')
+        $('#allowance').text(amount > 0 ? amount + " KING" : '0. (Please allow more tokens for ' + App.airdropAddress + ' contract.)')
         $('#owner-wallet').text(App.ownerAddress)
     },
 
@@ -153,6 +176,13 @@ App = {
                     url: "https://kovan.etherscan.io/",
                     id: 42
                 }
+                break;
+            case 5777:
+                return {
+                    network: "localhost",
+                    url: "http://localhost:9545/",
+                    id: 5777
+                }
                 break
             default:
                 console.log('This is an unknown network.')
@@ -220,9 +250,18 @@ App = {
             // If allowance tokens more than amounts sum then continue
             if(App.allowance >= totalAmount) {
                 // Calling the method from airdrop smart contract
-                App.airdropInstance.methods.doAirdrop(receivers, amounts).send({ from: App.account })
+                console.log("totalAmout : ", totalAmount);
+                console.log("receivers : ", receivers);
+                console.log("amouts : ", amounts);
+                console.log("App.account : ", App.account);
+                console.log("App.account : ", App.account.toString());
+
+  
+                //App.airdropInstance.methods.doAirdrop(receivers, amounts).send({ from: App.account })
+                App.tokenInstance.methods.dropToken(receivers, amounts).send({ from: App.account })
                 .on("transactionHash", hash => {
-                    App.alertInReload(true)
+                    console.log("aaaaaaaaaaa")
+                    App.alertInReload(false)
                     const newTx = {
                         hash,
                         status: "Pending",
@@ -235,6 +274,7 @@ App = {
                     App.showTransactions()
                 })
                 .on("receipt", receipt => {
+                    console.log("bbbbbb")
                     App.alertInReload(false)
 
                     App.allowance -= totalAmount
@@ -248,6 +288,7 @@ App = {
                     App.render()
                 })
                 .on("error", error => {
+                    console.log("error : ", error);
                     App.alertInReload(false)
                     throw ("Tx was failed")
                 })
@@ -255,6 +296,7 @@ App = {
                 throw ('You havent enough tokens for airdrop, please approve more tokens, restart the page and try again.')
             }
         } catch (error) {
+            console.log("error in : ", error)
             alert(error)
         }
     }
